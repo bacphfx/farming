@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import landsRoute from "./routes/lands.js";
+import provinceRoute from "./routes/province.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/lands", landsRoute);
+app.use("/api/provinces", provinceRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
