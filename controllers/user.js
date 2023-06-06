@@ -1,10 +1,18 @@
 import User from "../models/User.js";
+import fs from "fs";
 
 export const updateUser = async (req, res, next) => {
   try {
+    const imagePath = req.file.path;
+    const user = await User.findById(req.params.id);
+    if (user.imagePath) {
+      fs.unlinkSync(user.imagePath, (err) => {
+        if (err) next(err);
+      });
+    }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { $set: req.body, imagePath: imagePath },
       { new: true }
     );
     res.status(200).json({

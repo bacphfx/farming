@@ -6,11 +6,12 @@ import {
   getUsers,
 } from "../controllers/user.js";
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
+import upload from "../utils/multer.js";
 
 const router = express.Router();
 
 //UPDATE
-router.put("/update/:id", verifyUser, updateUser);
+router.put("/update/:id", verifyUser, upload.single("image"), updateUser);
 
 //DELETE
 router.delete("/delete/:id", verifyAdmin, deleteUser);

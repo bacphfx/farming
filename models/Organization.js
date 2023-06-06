@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-const UserSchema = new mongoose.Schema(
+const OrganizationSchema = new mongoose.Schema(
   {
-    fullname: {
+    ten: {
       type: String,
       required: true,
     },
@@ -13,19 +13,16 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
     },
-    password: {
+    dia_chi: {
       type: String,
       required: true,
     },
     imagePath: String,
-    ma_gioi_thieu: String,
-    ma_to_chuc: String,
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    dai_dien: {
+      type: String,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("Organization", OrganizationSchema);
