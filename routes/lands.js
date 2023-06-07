@@ -6,6 +6,7 @@ import {
   getLands,
   updateLand,
 } from "../controllers/land.js";
+import upload from "../utils/multer.js";
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ const router = express.Router();
 router.post("/create", createLand);
 
 //UPDATE
-router.put("/update/:id", updateLand);
+router.put("/update/:id", upload.array("image"), updateLand);
 //DELETE
 router.delete("/delete/:id", deleteLand);
 //GET

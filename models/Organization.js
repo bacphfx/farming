@@ -17,7 +17,7 @@ const OrganizationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imagePath: String,
+    image_path: String,
     dai_dien: {
       type: String,
     },

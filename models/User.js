@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imagePath: String,
+    image_path: String,
     ma_gioi_thieu: String,
     ma_to_chuc: String,
     isAdmin: {

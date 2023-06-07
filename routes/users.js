@@ -11,7 +11,7 @@ import upload from "../utils/multer.js";
 const router = express.Router();
 
 //UPDATE
-router.put("/update/:id", verifyUser, upload.single("image"), updateUser);
+router.put("/update/:id", verifyUser, updateUser);
 
 //DELETE
 router.delete("/delete/:id", verifyAdmin, deleteUser);
