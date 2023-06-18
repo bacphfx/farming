@@ -19,7 +19,10 @@ const UserSchema = new mongoose.Schema(
     },
     image_path: String,
     ma_gioi_thieu: String,
-    ma_to_chuc: String,
+    organization: {
+      organizationId: String,
+      isFounder: { type: Boolean, default: false },
+    },
     isAdmin: {
       type: Boolean,
       default: false,

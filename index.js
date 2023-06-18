@@ -8,6 +8,7 @@ import provinceRoute from "./routes/province.js";
 import uploadRoute from "./routes/upload.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,7 @@ mongoose.connection.on("disconnected", () => {
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(multer().array)
 
 app.use("/api/auth", authRoute);

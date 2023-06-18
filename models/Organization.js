@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const OrganizationSchema = new mongoose.Schema(
   {
-    ten: {
+    ten_to_chuc: {
       type: String,
       required: true,
     },
@@ -13,6 +13,7 @@ const OrganizationSchema = new mongoose.Schema(
     email: {
       type: String,
     },
+    ma_to_chuc: String,
     dia_chi: {
       type: String,
       required: true,
@@ -21,8 +22,14 @@ const OrganizationSchema = new mongoose.Schema(
     dai_dien: {
       type: String,
     },
+    members: [String],
   },
   { timestamps: true }
 );
+
+OrganizationSchema.methods.addMember = function (user) {
+  this.members.push(user._id);
+  return this.save();
+};
 
 export default mongoose.model("Organization", OrganizationSchema);

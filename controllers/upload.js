@@ -6,7 +6,7 @@ export const uploadAvatar = async (req, res, next) => {
   try {
     const image = req.file;
     if (!image) {
-      return;
+      return next(createError(500, "Vui lòng chọn 1 ảnh."));
     }
     const imagePath = image.path;
     const user = await User.findById(req.user.id);
