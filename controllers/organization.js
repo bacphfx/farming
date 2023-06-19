@@ -3,27 +3,28 @@ const User = require("../models/User");
 
 exports.createOrganization = async (req, res, next) => {
   const userId = req.user.id;
+  console.log(userId);
   const newOrganization = new Organization(req.body);
 
   try {
     const savedOrganization = await newOrganization.save();
     await savedOrganization.addMember(userId);
-    const user = await User.find({ _id: userId });
+    const user = await User.findOne({ _id: userId });
     console.log(user);
     await user.createOrganization(savedOrganization);
 
     res.status(200).json({
       status: 200,
-      message: "Tạo mới mảnh đất thành công",
+      message: "Tạo mới tổ chức thành công",
       data: savedOrganization,
     });
   } catch (err) {
     next(err);
   }
 };
-exports.updateLand = async (req, res, next) => {
+exports.updateOrganization = async (req, res, next) => {
   try {
-    const updatedLand = await Land.findByIdAndUpdate(
+    const updatedOrg = await Organization.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
@@ -37,34 +38,33 @@ exports.updateLand = async (req, res, next) => {
     next(err);
   }
 };
-exports.deleteLand = async (req, res, next) => {
+exports.deleteOrganization = async (req, res, next) => {
   try {
     await Land.findByIdAndDelete(req.params.id);
-    res.status(200).json({ stauts: 200, message: "Land has been deleted." });
-  } catch (err) {
-    next(err);
-  }
-};
-exports.getLand = async (req, res, next) => {
-  try {
-    const land = await Land.findById(req.params.id);
     res
       .status(200)
-      .json({ status: 200, message: "Lấy thông tin thành công!", data: land });
+      .json({ stauts: 200, message: "Organization has been deleted." });
   } catch (err) {
     next(err);
   }
 };
-exports.getLands = async (req, res, next) => {
+exports.getOrganization = async (req, res, next) => {
+  try {
+    const org = await Organization.findById(req.params.id);
+    res
+      .status(200)
+      .json({ status: 200, message: "Lấy thông tin thành công!", data: org });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.getOrgs = async (req, res, next) => {
   const { min, max, ...others } = req.query;
   try {
-    const lands = await Land.find({
-      ...others,
-      cheapestPrice: { $gt: min | 1, $lt: max || 999 },
-    }).limit(req.query.limit);
+    const orgs = await Organization.find();
     res
       .status(200)
-      .json({ status: 200, message: "Lấy thông tin thành công!", data: lands });
+      .json({ status: 200, message: "Lấy thông tin thành công!", data: orgs });
   } catch (err) {
     next(err);
   }

@@ -14,7 +14,7 @@ router.put(
 
 router.put("/images", upload.array("images", 5), (req, res) => {
   if (req.files) {
-    res.send("Muliple files uploaded successfully");
+    res.send("Multiple files uploaded successfully");
   } else {
     res.status(400).send("Please upload a valid images");
   }

@@ -8,15 +8,15 @@ const router = express.Router();
 //CREATE
 router.post("/create", verify.verifyUser, orgController.createOrganization);
 
-// //UPDATE
-// router.put("/update/:id", upload.array("image"), landController.updateLand);
-// //DELETE
-// router.delete("/delete/:id", landController.deleteLand);
-// //GET
+//UPDATE
+router.put("/update/:id", orgController.updateOrganization);
+//DELETE
+router.delete("/delete/:id", orgController.deleteOrganization);
+//GET
 
-// router.get("/get/:id", landController.getLand);
-// //GET ALL
+router.get("/get/:id", orgController.getOrganization);
+//GET ALL
 
-// router.get("/get-all", landController.getLands);
+router.get("/get-all", orgController.getOrgs);
 
 module.exports = router;

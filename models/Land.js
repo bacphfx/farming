@@ -42,7 +42,7 @@ const LandSchema = new mongoose.Schema({
   sinh_truong: {
     type: String,
   },
-  ky_thuat_cham_soc: {
+  kt_cham_soc: {
     type: String,
   },
   thu_hoach: {
