@@ -39,6 +39,7 @@ exports.getUser = async (req, res, next) => {
 };
 exports.getUsers = async (req, res, next) => {
   try {
+    console.log(req.user);
     const users = await User.find();
     res
       .status(200)

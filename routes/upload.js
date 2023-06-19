@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.put(
   "/avata",
-  verify.verifyUser,
+  verify.verifyToken,
   upload.single("image"),
   uploadController.uploadAvatar
 );
