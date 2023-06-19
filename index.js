@@ -1,14 +1,16 @@
-import express from "express";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import authRoute from "./routes/auth.js";
-import usersRoute from "./routes/users.js";
-import landsRoute from "./routes/lands.js";
-import provinceRoute from "./routes/province.js";
-import uploadRoute from "./routes/upload.js";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import bodyParser from "body-parser";
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const authRoute = require("./routes/auth.js");
+const usersRoute = require("./routes/users.js");
+const landsRoute = require("./routes/lands.js");
+const provinceRoute = require("./routes/province.js");
+const uploadRoute = require("./routes/upload.js");
+const orgRoute = require("./routes/organization");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const path = require("path");
 
 const app = express();
 dotenv.config();
@@ -31,6 +33,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use("/images", express.static(path.join(__dirname, "images")));
 // app.use(multer().array)
 
 app.use("/api/auth", authRoute);
@@ -38,6 +41,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/lands", landsRoute);
 app.use("/api/provinces", provinceRoute);
 app.use("/api/upload", uploadRoute);
+app.use("/api/organization", orgRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

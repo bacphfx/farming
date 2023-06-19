@@ -1,9 +1,9 @@
-import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import { createError } from "../utils/error.js";
-import jwt from "jsonwebtoken";
+const User = require("../models/User.js");
+const bcrypt = require("bcryptjs");
+const createError = require("../utils/error.js");
+const jwt = require("jsonwebtoken");
 
-export const register = async (req, res, next) => {
+exports.register = async (req, res, next) => {
   try {
     const user = await User.findOne({ telephone: req.body.telephone });
     if (user) return next(createError(404, "Số điện thoại đã được sử dụng"));
@@ -34,7 +34,7 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ telephone: req.body.telephone });
     if (!user)

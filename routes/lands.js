@@ -1,27 +1,21 @@
-import express from "express";
-import {
-  createLand,
-  deleteLand,
-  getLand,
-  getLands,
-  updateLand,
-} from "../controllers/land.js";
-import upload from "../utils/multer.js";
+const express = require("express");
+const landController = require("../controllers/land");
+const upload = require("../utils/multer.js");
 
 const router = express.Router();
 
 //CREATE
-router.post("/create", createLand);
+router.post("/create", landController.createLand);
 
 //UPDATE
-router.put("/update/:id", upload.array("image"), updateLand);
+router.put("/update/:id", upload.array("image"), landController.updateLand);
 //DELETE
-router.delete("/delete/:id", deleteLand);
+router.delete("/delete/:id", landController.deleteLand);
 //GET
 
-router.get("/get/:id", getLand);
+router.get("/get/:id", landController.getLand);
 //GET ALL
 
-router.get("/get-all", getLands);
+router.get("/get-all", landController.getLands);
 
-export default router;
+module.exports = router;

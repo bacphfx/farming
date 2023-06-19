@@ -1,25 +1,19 @@
-import express from "express";
-import {
-  updateUser,
-  deleteUser,
-  getUser,
-  getUsers,
-} from "../controllers/user.js";
-import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
-import upload from "../utils/multer.js";
+const express = require("express");
+const userController = require("../controllers/user.js");
+const verify = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
 //UPDATE
-router.put("/update/:id", verifyUser, updateUser);
+router.put("/update/:id", verify.verifyUser, userController.updateUser);
 
 //DELETE
-router.delete("/delete/:id", verifyAdmin, deleteUser);
+router.delete("/delete/:id", verify.verifyAdmin, userController.deleteUser);
 
 //GET
-router.get("/get/:id", verifyUser, getUser);
+router.get("/get/:id", verify.verifyUser, userController.getUser);
 
 //GET ALL
-router.get("/get-all", verifyAdmin, getUsers);
+router.get("/get-all", verify.verifyAdmin, userController.getUsers);
 
-export default router;
+module.exports = router;

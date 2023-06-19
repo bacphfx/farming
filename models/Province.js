@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const ProvinceSchema = new mongoose.Schema({
   name: String,
   code: Number,
@@ -25,4 +25,4 @@ const ProvinceSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model("Province", ProvinceSchema);
+module.exports = mongoose.model("Province", ProvinceSchema);

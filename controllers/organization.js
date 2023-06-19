@@ -1,15 +1,16 @@
-import Organization from "../models/Organization.js";
-import User from "../models/User.js";
+const Organization = require("../models/Organization");
+const User = require("../models/User");
 
-export const createOrganization = async (req, res, next) => {
-  const newOrganization = new Organization(req.body);
+exports.createOrganization = async (req, res, next) => {
   const userId = req.user.id;
+  const newOrganization = new Organization(req.body);
 
   try {
     const savedOrganization = await newOrganization.save();
-    const user = await User.findById(userId);
-    const userOrg = user.organization;
-    userOrg.organizationId = savedOrganization._id;
+    await savedOrganization.addMember(userId);
+    const user = await User.find({ _id: userId });
+    console.log(user);
+    await user.createOrganization(savedOrganization);
 
     res.status(200).json({
       status: 200,
@@ -20,7 +21,7 @@ export const createOrganization = async (req, res, next) => {
     next(err);
   }
 };
-export const updateLand = async (req, res, next) => {
+exports.updateLand = async (req, res, next) => {
   try {
     const updatedLand = await Land.findByIdAndUpdate(
       req.params.id,
@@ -36,7 +37,7 @@ export const updateLand = async (req, res, next) => {
     next(err);
   }
 };
-export const deleteLand = async (req, res, next) => {
+exports.deleteLand = async (req, res, next) => {
   try {
     await Land.findByIdAndDelete(req.params.id);
     res.status(200).json({ stauts: 200, message: "Land has been deleted." });
@@ -44,7 +45,7 @@ export const deleteLand = async (req, res, next) => {
     next(err);
   }
 };
-export const getLand = async (req, res, next) => {
+exports.getLand = async (req, res, next) => {
   try {
     const land = await Land.findById(req.params.id);
     res
@@ -54,7 +55,7 @@ export const getLand = async (req, res, next) => {
     next(err);
   }
 };
-export const getLands = async (req, res, next) => {
+exports.getLands = async (req, res, next) => {
   const { min, max, ...others } = req.query;
   try {
     const lands = await Land.find({

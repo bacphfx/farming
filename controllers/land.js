@@ -1,6 +1,6 @@
-import Land from "../models/Land.js";
+const Land = require("../models/Land.js");
 
-export const createLand = async (req, res, next) => {
+exports.createLand = async (req, res, next) => {
   const newLand = new Land(req.body);
 
   try {
@@ -14,7 +14,7 @@ export const createLand = async (req, res, next) => {
     next(err);
   }
 };
-export const updateLand = async (req, res, next) => {
+exports.updateLand = async (req, res, next) => {
   try {
     const updatedLand = await Land.findByIdAndUpdate(
       req.params.id,
@@ -30,7 +30,7 @@ export const updateLand = async (req, res, next) => {
     next(err);
   }
 };
-export const deleteLand = async (req, res, next) => {
+exports.deleteLand = async (req, res, next) => {
   try {
     await Land.findByIdAndDelete(req.params.id);
     res.status(200).json({ stauts: 200, message: "Land has been deleted." });
@@ -38,7 +38,7 @@ export const deleteLand = async (req, res, next) => {
     next(err);
   }
 };
-export const getLand = async (req, res, next) => {
+exports.getLand = async (req, res, next) => {
   try {
     const land = await Land.findById(req.params.id);
     res
@@ -48,7 +48,7 @@ export const getLand = async (req, res, next) => {
     next(err);
   }
 };
-export const getLands = async (req, res, next) => {
+exports.getLands = async (req, res, next) => {
   const { min, max, ...others } = req.query;
   try {
     const lands = await Land.find({

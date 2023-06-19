@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const OrganizationSchema = new mongoose.Schema(
   {
     ten_to_chuc: {
       type: String,
       required: true,
+      unique: true,
     },
     telephone: {
       type: String,
@@ -13,7 +14,11 @@ const OrganizationSchema = new mongoose.Schema(
     email: {
       type: String,
     },
-    ma_to_chuc: String,
+    ma_to_chuc: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     dia_chi: {
       type: String,
       required: true,
@@ -27,9 +32,8 @@ const OrganizationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-OrganizationSchema.methods.addMember = function (user) {
-  this.members.push(user._id);
+OrganizationSchema.methods.addMember = function (userId) {
+  this.members.push(userId);
   return this.save();
 };
-
-export default mongoose.model("Organization", OrganizationSchema);
+module.exports = mongoose.model("Organization", OrganizationSchema);

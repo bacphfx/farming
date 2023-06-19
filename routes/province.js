@@ -1,16 +1,12 @@
-import express from "express";
-import {
-  getDistricts,
-  getProvinces,
-  getWards,
-} from "../controllers/province.js";
+const express = require("express");
+const provinceController = require("../controllers/province");
 
 const router = express.Router();
 
-router.get("/get-provinces", getProvinces);
+router.get("/get-provinces", provinceController.getProvinces);
 
-router.get("/get-districts", getDistricts);
+router.get("/get-districts", provinceController.getDistricts);
 
-router.get("/get-wards", getWards);
+router.get("/get-wards", provinceController.getWards);
 
-export default router;
+module.exports = router;

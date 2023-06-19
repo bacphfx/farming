@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema(
   {
     fullname: {
@@ -19,10 +19,12 @@ const UserSchema = new mongoose.Schema(
     },
     image_path: String,
     ma_gioi_thieu: String,
-    organization: {
-      organizationId: String,
-      isFounder: { type: Boolean, default: false },
-    },
+    organization: [
+      {
+        organizationId: String,
+        isFounder: { type: Boolean },
+      },
+    ],
     isAdmin: {
       type: Boolean,
       default: false,
@@ -31,4 +33,18 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", UserSchema);
+UserSchema.methods.createOrganization = function (org) {
+  const orgId = org._id.toString();
+  const newOrg = { organizationId: orgId, isFounder: true };
+  this.organization.push(newOrg);
+  return this.save();
+};
+
+UserSchema.methods.joinOrganization = function (org) {
+  const orgId = org._id.toString();
+  const newOrg = { organizationId: orgId, isFounder: false };
+  this.organization.push(newOrg);
+  return this.save();
+};
+
+module.exports = mongoose.model("User", UserSchema);

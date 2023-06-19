@@ -1,7 +1,7 @@
-import Province from "../models/Province.js";
-import { createError } from "../utils/error.js";
+const Province = require("../models/Province.js");
+const createError = require("../utils/error.js");
 
-export const getProvinces = async (req, res, next) => {
+exports.getProvinces = async (req, res, next) => {
   try {
     const data = await Province.find();
     const provinces = data.map((data) => {
@@ -17,7 +17,7 @@ export const getProvinces = async (req, res, next) => {
   }
 };
 
-export const getDistricts = async (req, res, next) => {
+exports.getDistricts = async (req, res, next) => {
   try {
     const data = await Province.findOne({ code: req.query.p });
     const districts = data.districts.map((data) => {
@@ -33,7 +33,7 @@ export const getDistricts = async (req, res, next) => {
   }
 };
 
-export const getWards = async (req, res, next) => {
+exports.getWards = async (req, res, next) => {
   try {
     const data = await Province.findOne({ code: req.query.p });
     const wards = data.districts

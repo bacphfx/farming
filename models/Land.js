@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const LandSchema = new mongoose.Schema({
   ten: {
     type: String,
@@ -50,4 +50,4 @@ const LandSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Land", LandSchema);
+module.exports = mongoose.model("Land", LandSchema);

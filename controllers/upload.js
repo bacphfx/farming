@@ -1,8 +1,8 @@
-import User from "../models/User.js";
-import fs from "fs";
-import { createError } from "../utils/error.js";
+const User = require("../models/User.js");
+const fs = require("fs");
+const createError = require("../utils/error.js");
 
-export const uploadAvatar = async (req, res, next) => {
+exports.uploadAvatar = async (req, res, next) => {
   try {
     const image = req.file;
     if (!image) {
@@ -30,4 +30,4 @@ export const uploadAvatar = async (req, res, next) => {
   }
 };
 
-export const uploadImages = (req, res, next) => {};
+exports.uploadImages = (req, res, next) => {};

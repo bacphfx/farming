@@ -1,10 +1,16 @@
-import express from "express";
-import upload from "../utils/multer.js";
-import { uploadAvatar } from "../controllers/upload.js";
-import { verifyUser } from "../utils/verifyToken.js";
+const express = require("express");
+const upload = require("../utils/multer.js");
+const verify = require("../utils/verifyToken");
+const uploadController = require("../controllers/upload.js");
+
 const router = express.Router();
 
-router.put("/avata", verifyUser, upload.single("image"), uploadAvatar);
+router.put(
+  "/avata",
+  verify.verifyUser,
+  upload.single("image"),
+  uploadController.uploadAvatar
+);
 
 router.put("/images", upload.array("images", 5), (req, res) => {
   if (req.files) {
@@ -14,4 +20,4 @@ router.put("/images", upload.array("images", 5), (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
