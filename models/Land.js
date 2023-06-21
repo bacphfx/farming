@@ -1,10 +1,22 @@
 const mongoose = require("mongoose");
 const LandSchema = new mongoose.Schema({
+  orgId: String,
   ten: {
     type: String,
     required: true,
   },
-  dia_chi: {
+  thon_xom: {
+    type: String,
+  },
+  xa_phuong: {
+    type: String,
+    required: true,
+  },
+  quan_huyen: {
+    type: String,
+    required: true,
+  },
+  tinh_tp: {
     type: String,
     required: true,
   },
@@ -16,36 +28,6 @@ const LandSchema = new mongoose.Schema({
     type: String,
   },
   tinh_trang: {
-    type: String,
-  },
-  thoi_vu: {
-    type: String,
-  },
-  tuoi_tieu: {
-    type: String,
-  },
-  lam_co: {
-    type: String,
-  },
-  dinh_duong: {
-    type: String,
-  },
-  phan_bon: {
-    type: String,
-  },
-  dich_benh: {
-    type: String,
-  },
-  thuoc_BVTV: {
-    type: String,
-  },
-  sinh_truong: {
-    type: String,
-  },
-  kt_cham_soc: {
-    type: String,
-  },
-  thu_hoach: {
     type: String,
   },
 });
