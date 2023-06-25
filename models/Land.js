@@ -30,6 +30,9 @@ const LandSchema = new mongoose.Schema({
   tinh_trang: {
     type: String,
   },
+  tho_nhuong: [String],
+  thoi_vu: [String],
+  tuoi_tieu: [String],
 });
 
 module.exports = mongoose.model("Land", LandSchema);
