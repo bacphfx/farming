@@ -6,7 +6,7 @@ const verify = require("../utils/verifyToken.js");
 const router = express.Router();
 
 //CREATE
-router.post("/create", verify.verifyUser, orgController.createOrganization);
+router.post("/create", verify.verifyToken, orgController.createOrganization);
 
 //UPDATE
 router.put("/update/:id", orgController.updateOrganization);
