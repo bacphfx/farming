@@ -36,4 +36,9 @@ router.get(
   userController.getUsers
 );
 
+router.post(
+  "/join-organization",
+  verify.verifyToken,
+  userController.joinOrganization
+);
 module.exports = router;

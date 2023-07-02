@@ -19,4 +19,6 @@ router.get("/get/:id", orgController.getOrganization);
 
 router.get("/get-all", orgController.getOrgs);
 
+router.post("/findByCode", orgController.findOrg);
+
 module.exports = router;

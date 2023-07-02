@@ -22,7 +22,7 @@ const tuoiTieuSchema = new mongoose.Schema({
   },
   thoi_gian: {
     type: Date,
-    required: true,
+    // required: true,
   },
 });
 

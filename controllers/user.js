@@ -1,3 +1,4 @@
+const Organization = require("../models/Organization.js");
 const User = require("../models/User.js");
 // import fs from "fs";
 
@@ -46,5 +47,22 @@ exports.getUsers = async (req, res, next) => {
       .json({ status: 200, message: "Lấy thông tin thành công!", data: users });
   } catch (err) {
     next(err);
+  }
+};
+
+exports.joinOrganization = async (req, res, next) => {
+  try {
+    const organization = await Organization.findOne({
+      ma_to_chuc: req.body.ma_to_chuc,
+    });
+    await organization.addMember(req.user.id);
+    const user = await User.findOne({ _id: req.user.id });
+    console.log(organization);
+    await user.joinOrganization(organization._id);
+    res
+      .status(200)
+      .json({ status: 200, message: "Tham gia tổ chức thành công" });
+  } catch (error) {
+    next(error);
   }
 };

@@ -18,4 +18,16 @@ router.get("/get/:id", landController.getLand);
 
 router.get("/get-all", landController.getLands);
 
+router.get("/tho-nhuong/:id", landController.getThoNhuong);
+
+router.post("/update/tho-nhuong/:id", landController.updateThoNhuong);
+
+router.get("/thoi-vu/:id", landController.getThoiVu);
+
+router.post("/update/thoi-vu/:id", landController.updateThoiVu);
+
+router.get("/tuoi-tieu/:id", landController.getTuoiTieu);
+
+router.post("/update/tuoi-tieu/:id", landController.updateTuoiTieu);
+
 module.exports = router;

@@ -19,13 +19,25 @@ const OrganizationSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    dia_chi: {
+    thon_xom: {
+      type: String,
+    },
+    xa_phuong: {
+      type: String,
+      required: true,
+    },
+    quan_huyen: {
+      type: String,
+      required: true,
+    },
+    tinh_tp: {
       type: String,
       required: true,
     },
     image_path: String,
     dai_dien: {
       type: String,
+      required: true,
     },
     members: [String],
   },
