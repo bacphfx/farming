@@ -30,24 +30,24 @@ router.get("/tuoi-tieu/:id", landController.getTuoiTieu);
 
 router.post("/update/tuoi-tieu/:id", landController.updateTuoiTieu);
 
-router.get("/lam-co/:id", landController.getTuoiTieu);
+router.get("/lam-co/:id", landController.getLamCo);
 
-router.post("/update/lam-co/:id", landController.updateTuoiTieu);
+router.post("/update/lam-co/:id", landController.updateLamCo);
 
-router.get("/dinh-duong/:id", landController.getTuoiTieu);
+router.get("/dinh-duong/:id", landController.getDinhDuong);
 
-router.post("/update/dinh-duong/:id", landController.updateTuoiTieu);
+router.post("/update/dinh-duong/:id", landController.updateDinhDuong);
 
-router.get("/phan-bon/:id", landController.getTuoiTieu);
+router.get("/phan-bon/:id", landController.getPhanBon);
 
-router.post("/update/phan-bon/:id", landController.updateTuoiTieu);
+router.post("/update/phan-bon/:id", landController.updatePhanBon);
 
-router.get("/dich-benh/:id", landController.getTuoiTieu);
+router.get("/dich-benh/:id", landController.getDichBenh);
 
-router.post("/update/dich-benh/:id", landController.updateTuoiTieu);
+router.post("/update/dich-benh/:id", landController.updateDichBenh);
 
-router.get("/thuoc-BVTV/:id", landController.getTuoiTieu);
+router.get("/thuoc-BVTV/:id", landController.getThuocBVTV);
 
-router.post("/update/thuoc-BVTV/:id", landController.updateTuoiTieu);
+router.post("/update/thuoc-BVTV/:id", landController.updateThuocBVTV);
 
 module.exports = router;
