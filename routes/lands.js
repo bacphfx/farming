@@ -30,4 +30,24 @@ router.get("/tuoi-tieu/:id", landController.getTuoiTieu);
 
 router.post("/update/tuoi-tieu/:id", landController.updateTuoiTieu);
 
+router.get("/lam-co/:id", landController.getTuoiTieu);
+
+router.post("/update/lam-co/:id", landController.updateTuoiTieu);
+
+router.get("/dinh-duong/:id", landController.getTuoiTieu);
+
+router.post("/update/dinh-duong/:id", landController.updateTuoiTieu);
+
+router.get("/phan-bon/:id", landController.getTuoiTieu);
+
+router.post("/update/phan-bon/:id", landController.updateTuoiTieu);
+
+router.get("/dich-benh/:id", landController.getTuoiTieu);
+
+router.post("/update/dich-benh/:id", landController.updateTuoiTieu);
+
+router.get("/thuoc-BVTV/:id", landController.getTuoiTieu);
+
+router.post("/update/thuoc-BVTV/:id", landController.updateTuoiTieu);
+
 module.exports = router;

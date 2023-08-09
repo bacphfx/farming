@@ -2,6 +2,12 @@ const Land = require("../models/Land.js");
 const Tho_Nhuong = require("../models/thoNhuong.js");
 const Thoi_Vu = require("../models/thoiVu.js");
 const Tuoi_Tieu = require("../models/tuoiTieu.js");
+const Lam_Co = require("../models/lamCo.js");
+const Dinh_Duong = require("../models/dinhDuong.js");
+const Phan_Bon = require("../models/phanBon.js");
+const Dich_Benh = require("../models/dichBenh.js");
+const Thuoc_BVTV = require("../models/thuocBVTV.js");
+
 const createError = require("../utils/error.js");
 
 exports.createLand = async (req, res, next) => {
@@ -45,7 +51,17 @@ exports.deleteLand = async (req, res, next) => {
 exports.getLand = async (req, res, next) => {
   try {
     const land = await Land.findById(req.params.id);
-    const { tho_nhuong, thoi_vu, tuoi_tieu, ...otherDetails } = land._doc;
+    const {
+      tho_nhuong,
+      thoi_vu,
+      tuoi_tieu,
+      lam_co,
+      dinh_duong,
+      phan_bon,
+      dich_benh,
+      thuoc_BVTV,
+      ...otherDetails
+    } = land._doc;
     res.status(200).json({
       status: 200,
       message: "Lấy thông tin thành công!",
@@ -68,36 +84,7 @@ exports.getLands = async (req, res, next) => {
   }
 };
 
-// exports.getLand = async (req, res, next) => {
-//   try {
-//     const land = await Land.findOne(req.param.landId);
-//     const list_tho_nhuong = await Promise.all(
-//       land.tho_nhuong.map((tho_nhuong_id) => {
-//         return Tho_Nhuong.findById(tho_nhuong_id);
-//       })
-//     );
-//     const list_thoi_vu = await Promise.all(
-//       land.thoi_vu.map((thoi_vu_id) => {
-//         return Thoi_Vu.findById(thoi_vu_id);
-//       })
-//     );
-//     const list_tuoi_tieu = await Promise.all(
-//       land.tuoi_tieu.map((tuoi_tieu_id) => {
-//         return Tuoi_Tieu.findById(tuoi_tieu_id);
-//       })
-//     );
-//     const data = {
-//       land: land,
-//       tho_nhuong: list_tho_nhuong,
-//       thoi_vu: list_thoi_vu,
-//       tuoi_tieu: list_tuoi_tieu,
-//     };
-//     res.status(200).json(data);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
+// Tho nhuong
 exports.getThoNhuong = async (req, res, next) => {
   try {
     const tho_nhuong = await Tho_Nhuong.find({ landId: req.params.id });
@@ -137,6 +124,7 @@ exports.updateThoNhuong = async (req, res, next) => {
   }
 };
 
+// Thoi vu
 exports.getThoiVu = async (req, res, next) => {
   try {
     const thoi_vu = await Thoi_Vu.find({ landId: req.params.id });
@@ -178,6 +166,7 @@ exports.updateThoiVu = async (req, res, next) => {
   }
 };
 
+// Tuoi tieu
 exports.getTuoiTieu = async (req, res, next) => {
   try {
     const tuoi_tieu = await Tuoi_Tieu.find({ landId: req.params.id });
@@ -206,6 +195,211 @@ exports.updateTuoiTieu = async (req, res, next) => {
     const land = await Land.findById(req.params.id);
 
     land.tuoi_tieu.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+  }
+};
+
+// Lam co
+exports.getLamCo = async (req, res, next) => {
+  try {
+    const lam_co = await Lam_Co.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: lam_co,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updateLamCo = async (req, res, next) => {
+  const lam_co = new Lam_Co({
+    nguoi_thuc_hien: req.body.nguoi_thuc_hien,
+    phuong_phap: req.body.phuong_phap,
+    thoi_gian: req.body.thoi_gian,
+    landId: req.params.id,
+  });
+  try {
+    const saved = await lam_co.save();
+    const land = await Land.findById(req.params.id);
+
+    land.lam_co.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+  }
+};
+
+// Dinh duong
+exports.getDinhDuong = async (req, res, next) => {
+  try {
+    const dinh_duong = await Dinh_Duong.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: dinh_duong,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updateDinhDuong = async (req, res, next) => {
+  const dinh_duong = new Lam_Co({
+    nguoi_cap_nhat: req.body.nguoi_cap_nhat,
+    hien_tuong: req.body.hien_tuong,
+    ket_qua_do: req.body.ket_qua_do,
+    thoi_gian: req.body.thoi_gian,
+    landId: req.params.id,
+  });
+  try {
+    const saved = await dinh_duong.save();
+    const land = await Land.findById(req.params.id);
+
+    land.dinh_duong.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+  }
+};
+
+// Phan bon
+exports.getPhanBon = async (req, res, next) => {
+  try {
+    const phan_bon = await Phan_Bon.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: phan_bon,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updatePhanBon = async (req, res, next) => {
+  const phan_bon = new Phan_Bon({
+    nguoi_thuc_hien: req.body.nguoi_thuc_hien,
+    ten_phan_bon: req.body.ten_phan_bon,
+    loai_phan_bon: req.body.loai_phan_bon,
+    cach_thuc_bon: req.body.cach_thuc_bon,
+    luong_su_dung: req.body.luong_su_dung,
+    thoi_gian: req.body.thoi_gian,
+    landId: req.params.id,
+  });
+  try {
+    const saved = await phan_bon.save();
+    const land = await Land.findById(req.params.id);
+
+    land.phan_bon.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+  }
+};
+
+// Dich benh hai
+exports.getDichBenh = async (req, res, next) => {
+  try {
+    const dich_benh = await Dich_Benh.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: dich_benh,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updateDichBenh = async (req, res, next) => {
+  const dich_benh = new Dich_Benh({
+    nguoi_thuc_hien: req.body.nguoi_thuc_hien,
+    hien_tuong: req.body.hien_tuong,
+    tac_nhan: req.body.tac_nhan,
+    thoi_gian: req.body.thoi_gian,
+    landId: req.params.id,
+  });
+  try {
+    const saved = await dich_benh.save();
+    const land = await Land.findById(req.params.id);
+
+    land.dich_benh.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+  }
+};
+
+// Thuoc bao ve thuc vat
+exports.getThuocBVTV = async (req, res, next) => {
+  try {
+    const thuoc_BVTV = await Thuoc_BVTV.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: thuoc_BVTV,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updateThuocBVTV = async (req, res, next) => {
+  const thuoc_BVTV = new Thuoc_BVTV({
+    ten_thuoc: req.body.ten_thuoc,
+    so_luong: req.body.so_luong,
+    thoi_gian: req.body.thoi_gian,
+    landId: req.params.id,
+  });
+  try {
+    const saved = await thuoc_BVTV.save();
+    const land = await Land.findById(req.params.id);
+
+    land.thuoc_BVTV.push(saved.id);
 
     const savedLand = await land.save();
 
