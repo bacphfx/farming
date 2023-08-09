@@ -264,7 +264,7 @@ exports.getDinhDuong = async (req, res, next) => {
 };
 
 exports.updateDinhDuong = async (req, res, next) => {
-  const dinh_duong = new Lam_Co({
+  const dinh_duong = new Dinh_Duong({
     nguoi_cap_nhat: req.body.nguoi_cap_nhat,
     hien_tuong: req.body.hien_tuong,
     ket_qua_do: req.body.ket_qua_do,
@@ -283,9 +283,11 @@ exports.updateDinhDuong = async (req, res, next) => {
       status: 200,
       message: "Cập nhật thông tin thành công!",
       data: savedLand,
+      
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error)
   }
 };
 
