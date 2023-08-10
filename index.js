@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
+const multer = require("multer");
 
 const app = express();
 dotenv.config();
@@ -28,13 +29,41 @@ mongoose.connection.on("disconnected", () => {
   console.log("mongoDB disconnected!");
 });
 
+const storageEngine = multer.diskStorage({
+  destination: "./images",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}--${file.originalname}`);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 //middlewares
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  multer({
+    storage: storageEngine,
+    limits: {
+      fileSize: "2mb",
+    },
+    fileFilter: fileFilter,
+  }).single("image")
+);
 app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use(multer().array)
+// app.use(multer().array("images"));
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);

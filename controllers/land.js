@@ -7,11 +7,39 @@ const Dinh_Duong = require("../models/dinhDuong.js");
 const Phan_Bon = require("../models/phanBon.js");
 const Dich_Benh = require("../models/dichBenh.js");
 const Thuoc_BVTV = require("../models/thuocBVTV.js");
+const fileHelper = require("../utils/file.js");
 
 const createError = require("../utils/error.js");
 
 exports.createLand = async (req, res, next) => {
-  const newLand = new Land(req.body);
+  const ten = req.body.ten;
+  const thon_xom = req.body.thon_xom;
+  const xa_phuong = req.body.xa_phuong;
+  const quan_huyen = req.body.quan_huyen;
+  const tinh_tp = req.body.tinh_tp;
+  const kich_thuoc = req.body.kich_thuoc;
+  const toa_do = req.body.toa_do;
+  const tinh_trang = req.body.tinh_trang;
+  const image = req.file;
+
+  if (!image) {
+    return next(createError(500, "Vui lòng chọn 1 ảnh."));
+  }
+
+  const imageUrl = image.path;
+  console.log(image);
+
+  const newLand = new Land({
+    ten: ten,
+    thon_xom: thon_xom,
+    xa_phuong: xa_phuong,
+    quan_huyen: quan_huyen,
+    tinh_tp: tinh_tp,
+    kich_thuoc: kich_thuoc,
+    toa_do: toa_do,
+    tinh_trang: tinh_trang,
+    imageUrl: imageUrl,
+  });
 
   try {
     const savedLand = await newLand.save();
@@ -25,6 +53,8 @@ exports.createLand = async (req, res, next) => {
   }
 };
 exports.updateLand = async (req, res, next) => {
+  const image = req.file;
+
   try {
     const updatedLand = await Land.findByIdAndUpdate(
       req.params.id,
@@ -264,7 +294,7 @@ exports.getDinhDuong = async (req, res, next) => {
 };
 
 exports.updateDinhDuong = async (req, res, next) => {
-  const dinh_duong = new Lam_Co({
+  const dinh_duong = new Dinh_Duong({
     nguoi_cap_nhat: req.body.nguoi_cap_nhat,
     hien_tuong: req.body.hien_tuong,
     ket_qua_do: req.body.ket_qua_do,

@@ -1,6 +1,5 @@
 const express = require("express");
 const landController = require("../controllers/land");
-const upload = require("../utils/multer.js");
 
 const router = express.Router();
 
@@ -8,7 +7,7 @@ const router = express.Router();
 router.post("/create", landController.createLand);
 
 //UPDATE
-router.put("/update/:id", upload.array("image"), landController.updateLand);
+router.put("/update/:id", landController.updateLand);
 //DELETE
 router.delete("/delete/:id", landController.deleteLand);
 //GET

@@ -30,6 +30,7 @@ const LandSchema = new mongoose.Schema({
   tinh_trang: {
     type: String,
   },
+  imageUrl: String,
   tho_nhuong: [String],
   thoi_vu: [String],
   tuoi_tieu: [String],

@@ -10,11 +10,11 @@ exports.uploadAvatar = async (req, res, next) => {
     }
     const imagePath = image.path;
     const user = await User.findById(req.user.id);
-    if (user.image_path) {
-      fs.unlinkSync(user.image_path, (err) => {
-        if (err) next(err);
-      });
-    }
+    // if (user.image_path) {
+    //   fs.unlinkSync(user.image_path, (err) => {
+    //     if (err) next(err);
+    //   });
+    // }
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { $set: req.body, image_path: imagePath },

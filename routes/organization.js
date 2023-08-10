@@ -1,6 +1,6 @@
 const express = require("express");
 const orgController = require("../controllers/organization");
-const upload = require("../utils/multer.js");
+const upload = require("../utils/file.js");
 const verify = require("../utils/verifyToken.js");
 
 const router = express.Router();
