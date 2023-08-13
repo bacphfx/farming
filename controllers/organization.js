@@ -94,6 +94,7 @@ exports.getOrganization = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.getOrgs = async (req, res, next) => {
   try {
     const orgs = await Organization.find();
@@ -102,6 +103,27 @@ exports.getOrgs = async (req, res, next) => {
       .json({ status: 200, message: "Lấy thông tin thành công!", data: orgs });
   } catch (err) {
     next(err);
+  }
+};
+
+exports.getMyOrgs = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const myOrgs = await Promise.all(
+      user.organization.map((org) => {
+        return Organization.findById(org.organizationId);
+      })
+    );
+    const data = myOrgs.map((o) => {
+      return { id: o._id, ten_to_chuc: o.ten_to_chuc };
+    });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: data,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 

@@ -1,4 +1,5 @@
 const Land = require("../models/Land.js");
+const User = require("../models/User.js");
 const Tho_Nhuong = require("../models/thoNhuong.js");
 const Thoi_Vu = require("../models/thoiVu.js");
 const Tuoi_Tieu = require("../models/tuoiTieu.js");
@@ -9,43 +10,60 @@ const Dich_Benh = require("../models/dichBenh.js");
 const Thuoc_BVTV = require("../models/thuocBVTV.js");
 const Sinh_Truong = require("../models/sinhTruong.js");
 const Cham_Soc = require("../models/chamSoc.js");
+const Thu_Hoach = require("../models/thuHoach.js");
 
 const createError = require("../utils/error.js");
+const Organization = require("../models/Organization.js");
 
 exports.createLand = async (req, res, next) => {
-  const ten = req.body.ten;
-  const thon_xom = req.body.thon_xom;
-  const xa_phuong = req.body.xa_phuong;
-  const quan_huyen = req.body.quan_huyen;
-  const tinh_tp = req.body.tinh_tp;
-  const kich_thuoc = req.body.kich_thuoc;
-  const toa_do = req.body.toa_do;
-  const tinh_trang = req.body.tinh_trang;
-  const imagePath = req.body.imagePath;
-  const chi_phi = req.body.chi_phi;
-
-  const newLand = new Land({
-    ten: ten,
-    thon_xom: thon_xom,
-    xa_phuong: xa_phuong,
-    quan_huyen: quan_huyen,
-    tinh_tp: tinh_tp,
-    kich_thuoc: kich_thuoc,
-    toa_do: toa_do,
-    tinh_trang: tinh_trang,
-    imagePath: imagePath,
-    chi_phi: chi_phi,
-  });
-
   try {
+    const ten = req.body.ten;
+    const thon_xom = req.body.thon_xom;
+    const xa_phuong = req.body.xa_phuong;
+    const quan_huyen = req.body.quan_huyen;
+    const tinh_tp = req.body.tinh_tp;
+    const kich_thuoc = req.body.kich_thuoc;
+    const toa_do = req.body.toa_do;
+    const tinh_trang = req.body.tinh_trang;
+    const imagePath = req.body.imagePath;
+    const chi_phi = req.body.chi_phi;
+    const orgId = req.body.orgId;
+
+    const newLand = await new Land({
+      orgId: orgId,
+      userId: req.user.id,
+      ten: ten,
+      thon_xom: thon_xom,
+      xa_phuong: xa_phuong,
+      quan_huyen: quan_huyen,
+      tinh_tp: tinh_tp,
+      kich_thuoc: kich_thuoc,
+      toa_do: toa_do,
+      tinh_trang: tinh_trang,
+      imagePath: imagePath,
+      chi_phi: chi_phi,
+    });
     const savedLand = await newLand.save();
+
+    const org = await Organization.findById(orgId);
+    const user = await User.findById(req.user.id);
+    const isFounder = user.organization.filter(
+      (o) => o.organizationId === org.id
+    )[0].isFounder;
+    if (!isFounder) {
+      return next(
+        createError(400, "Ban khong co quyen tao manh dat cho to chuc nay")
+      );
+    }
+    await org.addLand(savedLand.id);
     res.status(200).json({
       status: 200,
       message: "Tạo mới mảnh đất thành công",
       data: savedLand,
     });
   } catch (err) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(err);
   }
 };
 exports.updateLand = async (req, res, next) => {
@@ -69,6 +87,11 @@ exports.updateLand = async (req, res, next) => {
 exports.deleteLand = async (req, res, next) => {
   try {
     await Land.findByIdAndDelete(req.params.id);
+    const org = await Organization.findById(orgId);
+    const indexOfLand = org.indexOf(req.params.id);
+    if (indexOfLand > -1) {
+      org.land.splice(index, 1);
+    }
     res.status(200).json({ stauts: 200, message: "Land has been deleted." });
   } catch (err) {
     next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
@@ -86,6 +109,8 @@ exports.getLand = async (req, res, next) => {
       phan_bon,
       dich_benh,
       thuoc_BVTV,
+      sinh_truong,
+      cham_soc,
       ...otherDetails
     } = land._doc;
     res.status(200).json({
@@ -540,5 +565,73 @@ exports.updateChamSoc = async (req, res, next) => {
   } catch (error) {
     // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
     next(error);
+  }
+};
+
+// Thu hoach
+exports.getThuHoach = async (req, res, next) => {
+  try {
+    const thu_hoach = await Thu_Hoach.find({ landId: req.params.id });
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: thu_hoach,
+    });
+  } catch (err) {
+    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(err);
+  }
+};
+
+exports.updateThuHoach = async (req, res, next) => {
+  try {
+    const thu_hoach = await new Thu_Hoach({
+      landId: req.params.id,
+      nguoi_thuc_hien: req.body.nguoi_thuc_hien,
+      thoi_gian_thu_hoach: req.body.thoi_gian_thu_hoach,
+      isDone: true,
+    });
+
+    const saved = await thu_hoach.save();
+    const land = await Land.findById(req.params.id);
+
+    land.thu_hoach.push(saved.id);
+
+    const savedLand = await land.save();
+
+    res.status(200).json({
+      status: 200,
+      message: "Cập nhật thông tin thành công!",
+      data: savedLand,
+    });
+  } catch (error) {
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
+  }
+};
+
+exports.resetLand = async (req, res, next) => {
+  try {
+    const oldLand = await Land.findById(req.params.id);
+    const newLand = await new Land({
+      ten: oldLand.ten,
+      thon_xom: oldLand.thon_xom,
+      xa_phuong: oldLand.xa_phuong,
+      quan_huyen: oldLand.quan_huyen,
+      tinh_tp: oldLand.tinh_tp,
+      kich_thuoc: oldLand.kich_thuoc,
+      toa_do: oldLand.toa_do,
+      tinh_trang: oldLand.tinh_trang,
+      imagePath: oldLand.imagePath,
+      chi_phi: oldLand.chi_phi,
+    });
+    const saved = await newLand.save();
+    res.status(200).json({
+      status: 200,
+      message: "Lấy thông tin thành công!",
+      data: saved,
+    });
+  } catch (error) {
+    next(createError(400, "Co loi xay ra!"));
   }
 };

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const LandSchema = new mongoose.Schema({
   orgId: String,
+  userId: String,
   ten: {
     type: String,
     required: true,
@@ -42,6 +43,7 @@ const LandSchema = new mongoose.Schema({
   thuoc_BVTV: [String],
   sinh_truong: [String],
   cham_soc: [String],
+  thu_hoach: [String],
 });
 
 module.exports = mongoose.model("Land", LandSchema);

@@ -40,6 +40,7 @@ const OrganizationSchema = new mongoose.Schema(
       required: true,
     },
     members: [String],
+    lands: [String],
   },
   { timestamps: true }
 );
@@ -48,4 +49,10 @@ OrganizationSchema.methods.addMember = function (userId) {
   this.members.push(userId);
   return this.save();
 };
+
+OrganizationSchema.methods.addLand = function (landId) {
+  this.lands.push(landId);
+  return this.save();
+};
+
 module.exports = mongoose.model("Organization", OrganizationSchema);

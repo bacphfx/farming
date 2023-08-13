@@ -21,4 +21,6 @@ router.get("/get-all", orgController.getOrgs);
 
 router.post("/findByCode", orgController.findOrg);
 
+router.get("/get-my-org", verify.verifyToken, orgController.getMyOrgs);
+
 module.exports = router;
