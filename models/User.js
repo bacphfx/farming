@@ -17,7 +17,19 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image_path: String,
+    avata: String,
+    thon_xom: {
+      type: String,
+    },
+    xa_phuong: {
+      type: String,
+    },
+    quan_huyen: {
+      type: String,
+    },
+    tinh_tp: {
+      type: String,
+    },
     ma_gioi_thieu: String,
     organization: [
       {

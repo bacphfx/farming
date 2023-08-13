@@ -27,7 +27,7 @@ const phanBonSchema = new mongoose.Schema({
   thoi_gian: {
     type: Date,
   },
-  images: [String],
+  anh_phan_bon: [String],
 });
 
 module.exports = mongoose.model("Phan_bon", phanBonSchema);

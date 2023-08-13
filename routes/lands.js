@@ -49,4 +49,12 @@ router.get("/thuoc-BVTV/:id", landController.getThuocBVTV);
 
 router.post("/update/thuoc-BVTV/:id", landController.updateThuocBVTV);
 
+router.get("/sinh-truong/:id", landController.getSinhTruong);
+
+router.post("/update/sinh-truong/:id", landController.updateSinhTruong);
+
+router.get("/ky-thuat-cham-soc/:id", landController.getChamSoc);
+
+router.post("/update/ky-thuat-cham-soc/:id", landController.updateChamSoc);
+
 module.exports = router;

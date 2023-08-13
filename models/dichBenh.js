@@ -19,7 +19,8 @@ const dichBenhSchema = new mongoose.Schema({
   thoi_gian: {
     type: Date,
   },
-  images: [String],
+  anh_hien_tuong: String,
+  anh_tac_nhan: String,
 });
 
 module.exports = mongoose.model("Dich_benh_hai", dichBenhSchema);

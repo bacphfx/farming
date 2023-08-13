@@ -19,7 +19,7 @@ const dinhDuongSchema = new mongoose.Schema({
   thoi_gian: {
     type: Date,
   },
-  images: [String],
+  anh_dinh_duong: String,
 });
 
 module.exports = mongoose.model("Dinh_duong", dinhDuongSchema);

@@ -30,7 +30,8 @@ const LandSchema = new mongoose.Schema({
   tinh_trang: {
     type: String,
   },
-  imageUrl: String,
+  imagePath: String,
+  chi_phi: String,
   tho_nhuong: [String],
   thoi_vu: [String],
   tuoi_tieu: [String],
@@ -39,6 +40,8 @@ const LandSchema = new mongoose.Schema({
   phan_bon: [String],
   dich_benh: [String],
   thuoc_BVTV: [String],
+  sinh_truong: [String],
+  cham_soc: [String],
 });
 
 module.exports = mongoose.model("Land", LandSchema);

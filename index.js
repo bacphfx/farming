@@ -53,6 +53,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(
   multer({
     storage: storageEngine,
@@ -60,10 +61,9 @@ app.use(
       fileSize: "2mb",
     },
     fileFilter: fileFilter,
-  }).single("image")
+  }).array("images", 5)
 );
 app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use(multer().array("images"));
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);

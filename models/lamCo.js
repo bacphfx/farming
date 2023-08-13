@@ -15,7 +15,8 @@ const lamCoSchema = new mongoose.Schema({
   thoi_gian: {
     type: Date,
   },
-  images: [String],
+  anh_truoc_lam_co: String,
+  anh_sau_lam_co: String,
 });
 
 module.exports = mongoose.model("Lam_co", lamCoSchema);

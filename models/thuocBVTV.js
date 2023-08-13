@@ -15,7 +15,7 @@ const thuocBVTVSchema = new mongoose.Schema({
   thoi_gian: {
     type: Date,
   },
-  images: [String],
+  anh_thuoc_BVTV: String,
 });
 
 module.exports = mongoose.model("Thuoc_Bao_Ve_Thuc_Vat", thuocBVTVSchema);

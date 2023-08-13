@@ -5,11 +5,18 @@ const uploadController = require("../controllers/upload.js");
 
 const router = express.Router();
 
-router.put(
-  "/avata",
+router.post(
+  "/image",
   verify.verifyToken,
   // upload.single("image"),
-  uploadController.uploadAvatar
+  uploadController.uploadImage
+);
+
+router.post(
+  "/images",
+  verify.verifyToken,
+  // upload.single("image"),
+  uploadController.uploadImages
 );
 
 module.exports = router;
