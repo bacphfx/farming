@@ -9,15 +9,24 @@ const router = express.Router();
 router.post("/create", verify.verifyToken, orgController.createOrganization);
 
 //UPDATE
-router.put("/update/:id", orgController.updateOrganization);
+router.put("/update/:id", verify.verifyToken, orgController.updateOrganization);
 //DELETE
-router.delete("/delete/:id", orgController.deleteOrganization);
+router.delete(
+  "/delete/:id",
+  verify.verifyToken,
+  orgController.deleteOrganization
+);
 //GET
 
-router.get("/get/:id", orgController.getOrganization);
+router.get("/get/:id", verify.verifyToken, orgController.getOrganization);
 //GET ALL
 
-router.get("/get-all", orgController.getOrgs);
+router.get(
+  "/get-all",
+  verify.verifyToken,
+  verify.verifyAdmin,
+  orgController.getOrgs
+);
 
 router.post("/findByCode", orgController.findOrg);
 

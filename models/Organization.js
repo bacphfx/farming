@@ -4,7 +4,6 @@ const OrganizationSchema = new mongoose.Schema(
     ten_to_chuc: {
       type: String,
       required: true,
-      unique: true,
     },
     telephone: {
       type: String,
@@ -36,6 +35,22 @@ const OrganizationSchema = new mongoose.Schema(
     },
     image_path: String,
     dai_dien: {
+      type: String,
+      required: true,
+    },
+    sdt_dai_dien: {
+      type: String,
+      required: true,
+    },
+    email_dai_dien: {
+      type: String,
+      required: true,
+    },
+    so_luong: {
+      type: String,
+      required: true,
+    },
+    logo: {
       type: String,
       required: true,
     },

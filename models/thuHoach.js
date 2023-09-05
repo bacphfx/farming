@@ -4,14 +4,14 @@ const thuHoachSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  isDone: {
-    type: Boolean,
-    default: false,
-  },
-  thoi_gian_thu_hoach: {
-    type: Date,
+  thoi_gian_cap_nhat: {
+    type: String,
     require: true,
   },
+  san_luong: String,
+  gia_ban: String,
+  thanh_tien: String,
+  dien_tich: String,
 });
 
 module.exports = mongoose.model("Thu_hoach", thuHoachSchema);

@@ -15,7 +15,6 @@ exports.verifyToken = (req, res, next) => {
 };
 
 exports.verifyUser = (req, res, next) => {
-  console.log(req.user);
   if (req.user.id === req.params.id || req.user.isAdmin) {
     next();
   } else {

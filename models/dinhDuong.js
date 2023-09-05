@@ -17,9 +17,9 @@ const dinhDuongSchema = new mongoose.Schema({
     required: true,
   },
   thoi_gian: {
-    type: Date,
+    type: String,
   },
-  anh_dinh_duong: String,
+  anh_dinh_duong: [String],
 });
 
 module.exports = mongoose.model("Dinh_duong", dinhDuongSchema);

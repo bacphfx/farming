@@ -20,14 +20,14 @@ const thoiVuSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  anh_giong_cay: String,
+  anh_giong_cay: [String],
   thoi_gian_trong: {
-    type: Date,
+    type: String,
   },
   thoi_gian_thu_hoach: {
-    type: Date,
+    type: String,
   },
-  anh_thuc_hien_trong_xong: [String],
+  anh_sau_khi_gieo_trong: [String],
 });
 
 module.exports = mongoose.model("Thoi_vu", thoiVuSchema);

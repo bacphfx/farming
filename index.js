@@ -7,6 +7,7 @@ const landsRoute = require("./routes/lands.js");
 const provinceRoute = require("./routes/province.js");
 const uploadRoute = require("./routes/upload.js");
 const orgRoute = require("./routes/organization");
+const bannerRoute = require("./routes/banner");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -40,7 +41,8 @@ const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/webp"
   ) {
     cb(null, true);
   } else {
@@ -71,6 +73,7 @@ app.use("/api/lands", landsRoute);
 app.use("/api/provinces", provinceRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/organization", orgRoute);
+app.use("/api/banner", bannerRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

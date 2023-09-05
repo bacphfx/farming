@@ -16,7 +16,12 @@ router.delete("/delete/:id", verify.verifyToken, landController.deleteLand);
 router.get("/get/:id", verify.verifyToken, landController.getLand);
 //GET ALL
 
-router.get("/get-all", verify.verifyToken, landController.getLands);
+router.get(
+  "/get-all",
+  verify.verifyToken,
+  verify.verifyAdmin,
+  landController.getLands
+);
 
 router.get("/tho-nhuong/:id", verify.verifyToken, landController.getThoNhuong);
 

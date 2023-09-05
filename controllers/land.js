@@ -15,6 +15,18 @@ const Thu_Hoach = require("../models/thuHoach.js");
 const createError = require("../utils/error.js");
 const Organization = require("../models/Organization.js");
 
+function strToArr(str) {
+  const newStr = str
+    .replace("[", "")
+    .replace("]", "")
+    .replace(/(\r\n|\n|\r)/gm, "")
+    .replace(/\s/g, "");
+  if (newStr.includes(",")) {
+    return newStr.split(",").map((s) => s.slice(1, -1));
+  }
+  return [newStr.slice(1, -1)];
+}
+
 exports.createLand = async (req, res, next) => {
   try {
     const ten = req.body.ten;
@@ -119,7 +131,8 @@ exports.getLand = async (req, res, next) => {
       data: otherDetails,
     });
   } catch (err) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(err);
   }
 };
 
@@ -151,16 +164,41 @@ exports.getThoNhuong = async (req, res, next) => {
 
 exports.updateThoNhuong = async (req, res, next) => {
   const tho_nhuong = new Tho_Nhuong({
-    ngay_cap_nhat: req.body.ngay_cap_nhat,
-    ghi_chu: req.body.ghi_chu,
-    anh_tho_nhuong: req.body.anh_tho_nhuong,
+    nguoi_thuc_hien_1: req.body.nguoi_thuc_hien_1,
+    thoi_gian_1: req.body.thoi_gian_1,
     loai_dat: req.body.loai_dat,
-    dinh_duong: req.body.dinh_duong,
-    nguon_nuoc: req.body.nguon_nuoc,
-    anh_nguon_nuoc: req.body.anh_nguon_nuoc,
+    asen_1: req.body.asen_1,
+    cadimi_1: req.body.cadimi_1,
+    chi_1: req.body.chi_1,
+    crom_1: req.body.crom_1,
+    dong_1: req.body.dong_1,
+    kem_1: req.body.kem_1,
+    ph_1: req.body.ph_1,
+    nguoi_thuc_hien_2: req.body.nguoi_thuc_hien_2,
+    thoi_gian_2: req.body.thoi_gian_2,
+    ph_2: req.body.ph_2,
+    oxy: req.body.oxy,
+    chat_ran: req.body.chat_ran,
+    sar: req.body.sar,
+    clorua: req.body.clorua,
+    so4: req.body.so4,
+    bo: req.body.bo,
+    asen_2: req.body.asen_2,
+    cadimi_2: req.body.cadimi_2,
+    chi_2: req.body.chi_2,
+    crom_2: req.body.crom_2,
+    dong_2: req.body.dong_2,
+    kem_2: req.body.kem_2,
+    coli: req.body.coli,
     landId: req.params.id,
   });
   try {
+    tho_nhuong.image_path_1 = req.body.image_path_1
+      ? strToArr(req.body.image_path_1)
+      : null;
+    tho_nhuong.image_path_2 = req.body.image_path_2
+      ? strToArr(req.body.image_path_2)
+      : null;
     const saved = await tho_nhuong.save();
     const land = await Land.findById(req.params.id);
 
@@ -174,7 +212,8 @@ exports.updateThoNhuong = async (req, res, next) => {
       data: savedLand,
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
   }
 };
 
@@ -198,13 +237,17 @@ exports.updateThoiVu = async (req, res, next) => {
     trang_thai: req.body.trang_thai,
     cay_trong: req.body.cay_trong,
     giong_cay: req.body.giong_cay,
-    anh_giong_cay: req.body.anh_giong_cay,
     thoi_gian_trong: req.body.thoi_gian_trong,
     thoi_gian_thu_hoach: req.body.thoi_gian_thu_hoach,
-    anh_thuc_hien_trong_xong: req.body.anh_thuc_hien_trong_xong,
     landId: req.params.id,
   });
   try {
+    thoi_vu.anh_giong_cay = req.body.anh_giong_cay
+      ? strToArr(req.body.anh_giong_cay)
+      : null;
+    thoi_vu.anh_sau_khi_gieo_trong = req.body.anh_sau_khi_gieo_trong
+      ? strToArr(req.body.anh_sau_khi_gieo_trong)
+      : null;
     const saved = await thoi_vu.save();
     const land = await Land.findById(req.params.id);
 
@@ -218,7 +261,8 @@ exports.updateThoiVu = async (req, res, next) => {
       data: savedLand,
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
   }
 };
 
@@ -260,7 +304,8 @@ exports.updateTuoiTieu = async (req, res, next) => {
       data: savedLand,
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
   }
 };
 
@@ -284,11 +329,15 @@ exports.updateLamCo = async (req, res, next) => {
     nguoi_thuc_hien: req.body.nguoi_thuc_hien,
     phuong_phap: req.body.phuong_phap,
     thoi_gian: req.body.thoi_gian,
-    anh_truoc_lam_co: req.body.anh_truoc_lam_co,
-    anh_sau_lam_co: req.body.anh_sau_lam_co,
     landId: req.params.id,
   });
   try {
+    lam_co.anh_truoc_lam_co = req.body.anh_truoc_lam_co
+      ? strToArr(req.body.anh_truoc_lam_co)
+      : null;
+    lam_co.anh_sau_lam_co = req.body.anh_sau_lam_co
+      ? strToArr(req.body.anh_sau_lam_co)
+      : null;
     const saved = await lam_co.save();
     const land = await Land.findById(req.params.id);
 
@@ -302,7 +351,8 @@ exports.updateLamCo = async (req, res, next) => {
       data: savedLand,
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
   }
 };
 
@@ -327,10 +377,12 @@ exports.updateDinhDuong = async (req, res, next) => {
     hien_tuong: req.body.hien_tuong,
     ket_qua_do: req.body.ket_qua_do,
     thoi_gian: req.body.thoi_gian,
-    anh_dinh_duong: req.body.anh_dinh_duong,
     landId: req.params.id,
   });
   try {
+    dinh_duong.anh_dinh_duong = req.body.anh_dinh_duong
+      ? strToArr(req.body.anh_dinh_duong)
+      : null;
     const saved = await dinh_duong.save();
     const land = await Land.findById(req.params.id);
 
@@ -369,12 +421,20 @@ exports.updatePhanBon = async (req, res, next) => {
     ten_phan_bon: req.body.ten_phan_bon,
     loai_phan_bon: req.body.loai_phan_bon,
     cach_thuc_bon: req.body.cach_thuc_bon,
+    so_luong: req.body.so_luong,
     luong_su_dung: req.body.luong_su_dung,
+    thanh_tien: req.body.thanh_tien,
     thoi_gian: req.body.thoi_gian,
-    anh_phan_bon: req.body.anh_phan_bon,
+    ten_dai_ly: req.body.ten_dai_ly,
+    ten_nguoi_ban: req.body.ten_nguoi_ban,
+    dia_chi: req.body.dia_chi,
+    so_dien_thoai: req.body.so_dien_thoai,
     landId: req.params.id,
   });
   try {
+    phan_bon.anh_phan_bon = req.body.anh_phan_bon
+      ? strToArr(req.body.anh_phan_bon)
+      : null;
     const saved = await phan_bon.save();
     const land = await Land.findById(req.params.id);
 
@@ -388,7 +448,8 @@ exports.updatePhanBon = async (req, res, next) => {
       data: savedLand,
     });
   } catch (error) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(error);
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
   }
 };
 
@@ -413,11 +474,15 @@ exports.updateDichBenh = async (req, res, next) => {
     hien_tuong: req.body.hien_tuong,
     tac_nhan: req.body.tac_nhan,
     thoi_gian: req.body.thoi_gian,
-    anh_hien_tuong: req.body.anh_hien_tuong,
-    anh_tac_nhan: req.body.anh_tac_nhan,
     landId: req.params.id,
   });
   try {
+    dich_benh.anh_hien_tuong = req.body.anh_hien_tuong
+      ? strToArr(req.body.anh_hien_tuong)
+      : null;
+    dich_benh.anh_tac_nhan = req.body.anh_tac_nhan
+      ? strToArr(req.body.anh_tac_nhan)
+      : null;
     const saved = await dich_benh.save();
     const land = await Land.findById(req.params.id);
 
@@ -453,12 +518,23 @@ exports.getThuocBVTV = async (req, res, next) => {
 exports.updateThuocBVTV = async (req, res, next) => {
   const thuoc_BVTV = new Thuoc_BVTV({
     ten_thuoc: req.body.ten_thuoc,
+    lieu_luong: req.body.lieu_luong,
     so_luong: req.body.so_luong,
+    chi_phi: req.body.chi_phi,
+    phuong_phap: req.body.phuong_phap,
+    nguoi_thuc_hien: req.body.ten_thuoc,
     thoi_gian: req.body.thoi_gian,
-    anh_thuoc_BVTV: req.body.anh_thuoc_BVTV,
+    ten_dai_ly: req.body.ten_dai_ly,
+    ten_nguoi_ban: req.body.ten_nguoi_ban,
+    dia_chi: req.body.dia_chi,
+    dien_thoai: req.body.dien_thoai,
+
     landId: req.params.id,
   });
   try {
+    thuoc_BVTV.anh_thuoc_BVTV = req.body.anh_thuoc_BVTV
+      ? strToArr(req.body.anh_thuoc_BVTV)
+      : null;
     const saved = await thuoc_BVTV.save();
     const land = await Land.findById(req.params.id);
 
@@ -495,16 +571,31 @@ exports.updateSinhTruong = async (req, res, next) => {
   try {
     const sinh_truong = await new Sinh_Truong({ landId: req.params.id });
 
-    sinh_truong.cay_giong.anh_cay_giong = req.body.anh_cay_giong;
+    sinh_truong.cay_giong.anh_cay_giong = req.body.anh_cay_giong
+      ? strToArr(req.body.anh_cay_giong)
+      : null;
     sinh_truong.cay_giong.nguoi_thuc_hien = req.body.nguoi_thuc_hien_1;
-    sinh_truong.cay_o_vuon_uom.anh_cay_o_vuon_uom = req.body.anh_cay_o_vuon_uom;
+    sinh_truong.cay_giong.thoi_gian = req.body.thoi_gian_1;
+    sinh_truong.cay_o_vuon_uom.anh_cay_o_vuon_uom = req.body.anh_cay_o_vuon_uom
+      ? strToArr(req.body.anh_cay_o_vuon_uom)
+      : null;
     sinh_truong.cay_o_vuon_uom.nguoi_thuc_hien = req.body.nguoi_thuc_hien_2;
-    sinh_truong.ra_hoa.anh_ra_hoa = req.body.anh_ra_hoa;
+    sinh_truong.cay_o_vuon_uom.thoi_gian = req.body.thoi_gian_2;
+    sinh_truong.ra_hoa.anh_ra_hoa = req.body.anh_ra_hoa
+      ? strToArr(req.body.anh_ra_hoa)
+      : null;
     sinh_truong.ra_hoa.nguoi_thuc_hien = req.body.nguoi_thuc_hien_3;
-    sinh_truong.dau_qua.anh_dau_qua = req.body.anh_dau_qua;
+    sinh_truong.ra_hoa.thoi_gian = req.body.thoi_gian_3;
+    sinh_truong.dau_qua.anh_dau_qua = req.body.anh_dau_qua
+      ? strToArr(req.body.anh_dau_qua)
+      : null;
     sinh_truong.dau_qua.nguoi_thuc_hien = req.body.nguoi_thuc_hien_4;
-    sinh_truong.qua_gia_chin.anh_qua_gia_chin = req.body.anh_qua_gia_chin;
+    sinh_truong.dau_qua.thoi_gian = req.body.thoi_gian_4;
+    sinh_truong.qua_gia_chin.anh_qua_gia_chin = req.body.anh_qua_gia_chin
+      ? strToArr(req.body.anh_qua_gia_chin)
+      : null;
     sinh_truong.qua_gia_chin.nguoi_thuc_hien = req.body.nguoi_thuc_hien_5;
+    sinh_truong.qua_gia_chin.thoi_gian = req.body.thoi_gian_5;
 
     const saved = await sinh_truong.save();
     const land = await Land.findById(req.params.id);
@@ -543,11 +634,17 @@ exports.updateChamSoc = async (req, res, next) => {
   try {
     const cham_soc = await new Cham_Soc({ landId: req.params.id });
 
-    cham_soc.tia_canh.anh_tia_canh = req.body.anh_tia_canh;
+    cham_soc.tia_canh.anh_tia_canh = req.body.anh_tia_canh
+      ? strToArr(req.body.anh_tia_canh)
+      : null;
     cham_soc.tia_canh.nguoi_thuc_hien = req.body.nguoi_thuc_hien_1;
-    cham_soc.vun_goc.anh_vun_goc = req.body.anh_vun_goc;
+    cham_soc.vun_goc.anh_vun_goc = req.body.anh_vun_goc
+      ? strToArr(req.body.anh_vun_goc)
+      : null;
     cham_soc.vun_goc.nguoi_thuc_hien = req.body.nguoi_thuc_hien_2;
-    cham_soc.bao_trai.anh_bao_trai = req.body.anh_bao_trai;
+    cham_soc.bao_trai.anh_bao_trai = req.body.anh_bao_trai
+      ? strToArr(req.body.anh_bao_trai)
+      : null;
     cham_soc.bao_trai.nguoi_thuc_hien = req.body.nguoi_thuc_hien_3;
 
     const saved = await cham_soc.save();
@@ -588,8 +685,11 @@ exports.updateThuHoach = async (req, res, next) => {
     const thu_hoach = await new Thu_Hoach({
       landId: req.params.id,
       nguoi_thuc_hien: req.body.nguoi_thuc_hien,
-      thoi_gian_thu_hoach: req.body.thoi_gian_thu_hoach,
-      isDone: true,
+      thoi_gian_cap_nhat: req.body.thoi_gian_cap_nhat,
+      san_luong: req.body.san_luong,
+      gia_ban: req.body.gia_ban,
+      thanh_tien: req.body.thanh_tien,
+      dien_tich: req.body.dien_tich,
     });
 
     const saved = await thu_hoach.save();

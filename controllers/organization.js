@@ -25,6 +25,10 @@ exports.createOrganization = async (req, res, next) => {
     quan_huyen: req.body.quan_huyen,
     tinh_tp: req.body.tinh_tp,
     dai_dien: req.body.dai_dien,
+    sdt_dai_dien: req.body.sdt_dai_dien,
+    email_dai_dien: req.body.email_dai_dien,
+    logo: req.body.logo,
+    so_luong: req.body.so_luong,
   });
 
   try {

@@ -6,15 +6,15 @@ const chamSocSchema = new mongoose.Schema({
   },
   tia_canh: {
     nguoi_thuc_hien: String,
-    anh_tia_canh: String,
+    anh_tia_canh: [String],
   },
   vun_goc: {
     nguoi_thuc_hien: String,
-    anh_vun_goc: String,
+    anh_vun_goc: [String],
   },
   bao_trai: {
     nguoi_thuc_hien: String,
-    anh_bao_trai: String,
+    anh_bao_trai: [String],
   },
 });
 
