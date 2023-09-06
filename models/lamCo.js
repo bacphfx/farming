@@ -12,8 +12,11 @@ const lamCoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  ten_thuoc: String,
+  lieu_dung_thuoc: String,
+  hinh_anh_thuoc: [String],
   thoi_gian: {
-    type: Date,
+    type: String,
   },
   anh_truoc_lam_co: [String],
   anh_sau_lam_co: [String],

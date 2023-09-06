@@ -119,6 +119,62 @@ router.post(
   landController.updateThuHoach
 );
 
+router.get(
+  "/mua-cay-giong/:id",
+  verify.verifyToken,
+  landController.getMuaCayGiong
+);
+
+router.post(
+  "/update/mua-cay-giong/:id",
+  verify.verifyToken,
+  landController.updateMuaCayGiong
+);
+
+router.get(
+  "/mua-phan-bon/:id",
+  verify.verifyToken,
+  landController.getMuaPhanBon
+);
+
+router.post(
+  "/update/mua-phan-bon/:id",
+  verify.verifyToken,
+  landController.updateMuaPhanBon
+);
+
+router.get(
+  "/mua-thuoc-BVTV/:id",
+  verify.verifyToken,
+  landController.getMuaThuocBVTV
+);
+
+router.post(
+  "/update/mua-thuoc-BVTV/:id",
+  verify.verifyToken,
+  landController.updateMuaThuocBVTV
+);
+
+router.get(
+  "/mua-thuoc-diet-co/:id",
+  verify.verifyToken,
+  landController.getMuaThuocDietCo
+);
+
+router.post(
+  "/update/mua-thuoc-diet-co/:id",
+  verify.verifyToken,
+  landController.updateMuaThuocDietCo
+);
+
+router.get("/thoi-tiet/:id", verify.verifyToken, landController.getThoiTiet);
+
+router.post(
+  "/update/thoi-tiet/:id",
+  verify.verifyToken,
+  landController.updateThoiTiet
+);
+
 router.post("/reset/:id", verify.verifyToken, landController.resetLand);
 
 module.exports = router;
