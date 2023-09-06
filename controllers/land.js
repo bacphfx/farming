@@ -21,15 +21,16 @@ const createError = require("../utils/error.js");
 const Organization = require("../models/Organization.js");
 
 function strToArr(str) {
+  if (str == "[]") return null;
   const newStr = str
     .replace("[", "")
     .replace("]", "")
     .replace(/(\r\n|\n|\r)/gm, "")
     .replace(/\s/g, "");
   if (newStr.includes(",")) {
-    return newStr.split(",").map((s) => s.slice(1, -1));
+    return newStr.split(",");
   }
-  return [newStr.slice(1, -1)];
+  return [newStr];
 }
 
 exports.createLand = async (req, res, next) => {
@@ -42,7 +43,7 @@ exports.createLand = async (req, res, next) => {
     const kich_thuoc = req.body.kich_thuoc;
     const toa_do = req.body.toa_do;
     const tinh_trang = req.body.tinh_trang;
-    const imagePath = req.body.imagePath;
+    const imagePath = req.body.imagePath ? strToArr(req.body.imagePath) : null;
     const chi_phi = req.body.chi_phi;
     const orgId = req.body.orgId;
 
@@ -89,7 +90,10 @@ exports.updateLand = async (req, res, next) => {
   try {
     const updatedLand = await Land.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      {
+        $set: req.body,
+        imagePath: req.body.imagePath ? strToArr(req.body.imagePath) : null,
+      },
       { new: true }
     );
     res.status(200).json({
@@ -98,7 +102,8 @@ exports.updateLand = async (req, res, next) => {
       data: updatedLand,
     });
   } catch (err) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(err);
   }
 };
 exports.deleteLand = async (req, res, next) => {
@@ -648,14 +653,17 @@ exports.updateChamSoc = async (req, res, next) => {
       ? strToArr(req.body.anh_tia_canh)
       : null;
     cham_soc.tia_canh.nguoi_thuc_hien = req.body.nguoi_thuc_hien_1;
+    cham_soc.tia_canh.thoi_gian = req.body.thoi_gian_1;
     cham_soc.vun_goc.anh_vun_goc = req.body.anh_vun_goc
       ? strToArr(req.body.anh_vun_goc)
       : null;
     cham_soc.vun_goc.nguoi_thuc_hien = req.body.nguoi_thuc_hien_2;
+    cham_soc.vun_goc.thoi_gian = req.body.thoi_gian_2;
     cham_soc.bao_trai.anh_bao_trai = req.body.anh_bao_trai
       ? strToArr(req.body.anh_bao_trai)
       : null;
     cham_soc.bao_trai.nguoi_thuc_hien = req.body.nguoi_thuc_hien_3;
+    cham_soc.bao_trai.thoi_gian = req.body.thoi_gian_3;
 
     const saved = await cham_soc.save();
     const land = await Land.findById(req.params.id);
@@ -968,6 +976,7 @@ exports.updateThoiTiet = async (req, res, next) => {
       do_am_1: req.body.do_am_1,
       toc_do_gio_1: req.body.toc_do_gio_1,
       luong_mua_1: req.body.luong_mua_1,
+      thoi_gian_1: req.body.thoi_gian_1,
       he_thong_iot: req.body.he_thong_iot,
       nhiet_do_2: req.body.nhiet_do_2,
       do_am_2: req.body.do_am_2,

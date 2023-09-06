@@ -4,6 +4,7 @@ const thoiTietSchema = new mongoose.Schema({
   do_am_1: String,
   toc_do_gio_1: String,
   luong_mua_1: String,
+  thoi_gian_1: String,
   he_thong_iot: String,
   nhiet_do_2: String,
   do_am_2: String,

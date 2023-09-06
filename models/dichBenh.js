@@ -17,7 +17,7 @@ const dichBenhSchema = new mongoose.Schema({
     required: true,
   },
   thoi_gian: {
-    type: Date,
+    type: String,
   },
   anh_hien_tuong: [String],
   anh_tac_nhan: [String],
