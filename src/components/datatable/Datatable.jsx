@@ -10,10 +10,12 @@ const Datatable = ({ columns }) => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState();
-  const { data, loading, error } = useFetch(`/${path}`);
+  const { data, loading, error } = useFetch(
+    "http://localhost:5000/api/users/get-all"
+  );
 
   useEffect(() => {
-    setList(data);
+    setList(data.data);
   }, [data]);
 
   const handleDelete = async (id) => {
@@ -45,6 +47,10 @@ const Datatable = ({ columns }) => {
       },
     },
   ];
+  console.log(list);
+  const Table = () => {
+    return list.map((user) => <div>{user.fullname}</div>);
+  };
   return (
     <div className="datatable">
       <div className="datatableTitle">
@@ -53,15 +59,32 @@ const Datatable = ({ columns }) => {
           Add New
         </Link>
       </div>
-      <DataGrid
-        className="datagrid"
+      {/* <DataGrid
         rows={list}
         columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
         getRowId={(row) => row._id}
-      />
+      /> */}
+      {/* <div className="table-data">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+          </tr>
+          {list?.map((val, key) => {
+            return (
+              <tr key={key}>
+                <td>{val.name}</td>
+                <td>{val.age}</td>
+                <td>{val.gender}</td>
+              </tr>
+            );
+          })}
+        </table>
+      </div> */}
     </div>
   );
 };

@@ -30,7 +30,7 @@ const Login = () => {
 
       if (res.data.data.isAdmin) {
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data.details });
-        console.log(res.data.data.details);
+        console.log(res.data.data);
         navigate("/");
       } else {
         dispatch({
