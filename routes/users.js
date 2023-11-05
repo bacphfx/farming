@@ -32,7 +32,7 @@ router.get(
 router.get(
   "/get-all",
   verify.verifyToken,
-  verify.verifyAdmin,
+  // verify.verifyAdmin,
   userController.getUsers
 );
 
