@@ -16,22 +16,25 @@ const New = ({ inputs, title }) => {
   const handleClick = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "upload");
+    data.append("files", file.data);
+    // data.append("upload_preset", "upload");
+    console.log(data);
     try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/lamadev/image/upload",
-        data
-      );
+      // const uploadRes = await axios.post(
+      //   "http://localhost:5000/api/upload/image",
+      //   data
+      // );
 
-      const { url } = uploadRes.data;
+      // const { url } = uploadRes.data;
+
+      // console.log(url);
 
       const newUser = {
         ...info,
-        img: url,
+        // img: url,
       };
 
-      await axios.post("/auth/register", newUser);
+      await axios.post("http://localhost:5000/api/auth/register", newUser);
     } catch (err) {
       console.log(err);
     }
@@ -65,9 +68,10 @@ const New = ({ inputs, title }) => {
                 </label>
                 <input
                   type="file"
-                  id="file"
+                  id="images"
+                  name="images"
                   onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
+                  // style={{ display: "none" }}
                 />
               </div>
 

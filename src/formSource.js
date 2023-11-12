@@ -1,7 +1,7 @@
 export const userInputs = [
   {
-    id: "username",
-    label: "Username",
+    id: "fullname",
+    label: "Fullname",
     type: "text",
     placeholder: "john_doe",
   },
@@ -12,7 +12,7 @@ export const userInputs = [
     placeholder: "john_doe@gmail.com",
   },
   {
-    id: "phone",
+    id: "telephone",
     label: "Phone",
     type: "text",
     placeholder: "+1 234 567 89",
@@ -21,18 +21,6 @@ export const userInputs = [
     id: "password",
     label: "Password",
     type: "password",
-  },
-  {
-    id: "country",
-    label: "Country",
-    type: "text",
-    placeholder: "USA",
-  },
-  {
-    id: "city",
-    label: "City",
-    type: "text",
-    placeholder: "USA",
   },
 ];
 
