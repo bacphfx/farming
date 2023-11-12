@@ -108,15 +108,19 @@ exports.updateLand = async (req, res, next) => {
 };
 exports.deleteLand = async (req, res, next) => {
   try {
+    const land = await Land.findById(req.params.id);
     await Land.findByIdAndDelete(req.params.id);
-    const org = await Organization.findById(orgId);
-    const indexOfLand = org.indexOf(req.params.id);
+    const org = await Organization.findById(land.orgId);
+    // console.log(org);
+    const indexOfLand = org.lands.indexOf(req.params.id);
     if (indexOfLand > -1) {
-      org.land.splice(index, 1);
+      org.lands.splice(indexOfLand, 1);
     }
-    res.status(200).json({ stauts: 200, message: "Land has been deleted." });
+    await org.save();
+    res.status(200).json({ status: 200, message: "Land has been deleted." });
   } catch (err) {
-    next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
+    next(err);
+    // next(createError(400, "Có lỗi xảy ra, vui lòng thử lại!"));
   }
 };
 exports.getLand = async (req, res, next) => {

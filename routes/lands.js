@@ -5,176 +5,236 @@ const verify = require("../utils/verifyToken.js");
 const router = express.Router();
 
 //CREATE
-router.post("/create", verify.verifyToken, landController.createLand);
+router.post(
+  "/create",
+  //  verify.verifyToken,
+  landController.createLand
+);
 
 //UPDATE
-router.put("/update/:id", verify.verifyToken, landController.updateLand);
+router.put(
+  "/update/:id",
+  //  verify.verifyToken,
+  landController.updateLand
+);
 //DELETE
-router.delete("/delete/:id", verify.verifyToken, landController.deleteLand);
+router.delete(
+  "/delete/:id",
+  //  verify.verifyToken,
+  landController.deleteLand
+);
 //GET
 
-router.get("/get/:id", verify.verifyToken, landController.getLand);
+router.get(
+  "/get/:id",
+  //  verify.verifyToken,
+  landController.getLand
+);
 //GET ALL
 
 router.get(
   "/get-all",
-  verify.verifyToken,
-  verify.verifyAdmin,
+  // verify.verifyToken,
+  // verify.verifyAdmin,
   landController.getLands
 );
 
-router.get("/tho-nhuong/:id", verify.verifyToken, landController.getThoNhuong);
+router.get(
+  "/tho-nhuong/:id",
+  // verify.verifyToken,
+  landController.getThoNhuong
+);
 
 router.post(
   "/update/tho-nhuong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateThoNhuong
 );
 
-router.get("/thoi-vu/:id", verify.verifyToken, landController.getThoiVu);
+router.get(
+  "/thoi-vu/:id",
+  //  verify.verifyToken,
+  landController.getThoiVu
+);
 
 router.post(
   "/update/thoi-vu/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateThoiVu
 );
 
-router.get("/tuoi-tieu/:id", verify.verifyToken, landController.getTuoiTieu);
+router.get(
+  "/tuoi-tieu/:id",
+  //  verify.verifyToken,
+  landController.getTuoiTieu
+);
 
 router.post(
   "/update/tuoi-tieu/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateTuoiTieu
 );
 
-router.get("/lam-co/:id", verify.verifyToken, landController.getLamCo);
+router.get(
+  "/lam-co/:id",
+  //  verify.verifyToken,
+  landController.getLamCo
+);
 
 router.post(
   "/update/lam-co/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateLamCo
 );
 
-router.get("/dinh-duong/:id", verify.verifyToken, landController.getDinhDuong);
+router.get(
+  "/dinh-duong/:id",
+  //  verify.verifyToken,
+  landController.getDinhDuong
+);
 
 router.post(
   "/update/dinh-duong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateDinhDuong
 );
 
-router.get("/phan-bon/:id", verify.verifyToken, landController.getPhanBon);
+router.get(
+  "/phan-bon/:id",
+  //  verify.verifyToken,
+  landController.getPhanBon
+);
 
 router.post(
   "/update/phan-bon/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updatePhanBon
 );
 
-router.get("/dich-benh/:id", verify.verifyToken, landController.getDichBenh);
+router.get(
+  "/dich-benh/:id",
+  //  verify.verifyToken,
+  landController.getDichBenh
+);
 
 router.post(
   "/update/dich-benh/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateDichBenh
 );
 
-router.get("/thuoc-BVTV/:id", verify.verifyToken, landController.getThuocBVTV);
+router.get(
+  "/thuoc-BVTV/:id",
+  //  verify.verifyToken,
+  landController.getThuocBVTV
+);
 
 router.post(
   "/update/thuoc-BVTV/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateThuocBVTV
 );
 
 router.get(
   "/sinh-truong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getSinhTruong
 );
 
 router.post(
   "/update/sinh-truong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateSinhTruong
 );
 
 router.get(
   "/ky-thuat-cham-soc/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getChamSoc
 );
 
 router.post(
   "/update/ky-thuat-cham-soc/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateChamSoc
 );
 
-router.get("/thu-hoach/:id", verify.verifyToken, landController.getThuHoach);
+router.get(
+  "/thu-hoach/:id",
+  //  verify.verifyToken,
+  landController.getThuHoach
+);
 
 router.post(
   "/update/thu-hoach/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateThuHoach
 );
 
 router.get(
   "/mua-cay-giong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getMuaCayGiong
 );
 
 router.post(
   "/update/mua-cay-giong/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateMuaCayGiong
 );
 
 router.get(
   "/mua-phan-bon/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getMuaPhanBon
 );
 
 router.post(
   "/update/mua-phan-bon/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateMuaPhanBon
 );
 
 router.get(
   "/mua-thuoc-BVTV/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getMuaThuocBVTV
 );
 
 router.post(
   "/update/mua-thuoc-BVTV/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateMuaThuocBVTV
 );
 
 router.get(
   "/mua-thuoc-diet-co/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.getMuaThuocDietCo
 );
 
 router.post(
   "/update/mua-thuoc-diet-co/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateMuaThuocDietCo
 );
 
-router.get("/thoi-tiet/:id", verify.verifyToken, landController.getThoiTiet);
+router.get(
+  "/thoi-tiet/:id",
+  //  verify.verifyToken,
+  landController.getThoiTiet
+);
 
 router.post(
   "/update/thoi-tiet/:id",
-  verify.verifyToken,
+  // verify.verifyToken,
   landController.updateThoiTiet
 );
 
-router.post("/reset/:id", verify.verifyToken, landController.resetLand);
+router.post(
+  "/reset/:id",
+  //  verify.verifyToken,
+  landController.resetLand
+);
 
 module.exports = router;
