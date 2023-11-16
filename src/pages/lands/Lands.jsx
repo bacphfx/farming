@@ -33,7 +33,7 @@ const Datatable = () => {
     try {
       await axios.delete(`http://localhost:5000/api/lands/delete/${id}`);
       setLands(lands.filter((item) => item._id !== id));
-      console.log(lands);
+      // console.log(lands);
       // window.location.reload();
     } catch (err) {
       console.log(err);

@@ -3,7 +3,9 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import Lands from "./pages/lands/Lands";
 import Single from "./pages/single/Single";
+import SingleLand from "./pages/singleLand/SingleLand";
 import New from "./pages/new/New";
+import EditUser from "./pages/editUser/EditUser";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
@@ -66,6 +68,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="update/:userId"
+                element={
+                  <ProtectedRoute>
+                    <EditUser />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
             <Route path="lands">
               <Route
@@ -77,10 +87,10 @@ function App() {
                 }
               />
               <Route
-                path=":productId"
+                path=":landId"
                 element={
                   <ProtectedRoute>
-                    <Single />
+                    <SingleLand />
                   </ProtectedRoute>
                 }
               />

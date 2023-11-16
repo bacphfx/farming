@@ -4,10 +4,13 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
+  const [error, setError] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -15,10 +18,7 @@ const New = ({ inputs, title }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("files", file.data);
-    // data.append("upload_preset", "upload");
-    console.log(data);
+
     try {
       // const uploadRes = await axios.post(
       //   "http://localhost:5000/api/upload/image",
@@ -29,14 +29,20 @@ const New = ({ inputs, title }) => {
 
       // console.log(url);
 
-      const newUser = {
-        ...info,
-        // img: url,
-      };
+      // const newUser = {
+      //   ...info,
+      //   // img: url,
+      // };
 
-      await axios.post("http://localhost:5000/api/auth/register", newUser);
+      const res = await axios.post(
+        "http://103.130.213.34:5000/api/auth/register",
+        info
+      );
+      if (res.status === 200) {
+        navigate("/users");
+      }
     } catch (err) {
-      console.log(err);
+      setError(err.response.data);
     }
   };
 
@@ -88,6 +94,7 @@ const New = ({ inputs, title }) => {
               ))}
               <button onClick={handleClick}>Send</button>
             </form>
+            {error && <span className="error">{error.message}</span>}
           </div>
         </div>
       </div>

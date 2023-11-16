@@ -1,7 +1,7 @@
 import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 
@@ -20,7 +20,12 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <div className="editButton">Edit</div>
+            <Link
+              to={`/users/update/${user?._id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="editButton">Edit</div>
+            </Link>
             <h1 className="title">Information</h1>
             <div className="item">
               <img
